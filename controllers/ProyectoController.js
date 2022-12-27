@@ -223,14 +223,13 @@ const aceptarInvitacion = async (req, res) => {
     }
 
     proyecto.colaboradores.push(usuario._id);
-    proyecto.save();
+    await proyecto.save();
 
     usuario.invitaciones.pull(proyecto._id);
-    usuario.save();
+    await usuario.save();
 
-    return res.status(200).json({
-      msg: "Invitacion Aceptada",
-    });
+    return res.status(200).json(proyecto);
+    
   } catch (error) {
     console.log(error);
     return res.status(400).json({
