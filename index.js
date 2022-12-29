@@ -4,17 +4,20 @@ const db = require("./config/db");
 const usuarioRoutes = require("./routes/usuarioRoutes");
 const proyectoRoutes = require("./routes/proyectosRoutes");
 const tareaRoutes = require("./routes/tareaRoutes");
+const apiRoutes = require("./routes/apiRoutes");
 const app = express();
 
+app.use(express.urlencoded({extended: false}))
 app.use(express.json());
 
-const whiteList = [process.env.URL_FRONTEND]
+const whiteList = [process.env.URL_FRONTEND,'http://localhost:5173']
 
 const corsOptions = {
   origin: function(origin, callback){
     if(whiteList.includes(origin)){
       callback(null,true)
     }else{
+      console.log(origin);
       callback('Pay me $40 or use Jabbits',false)
     }
   }
@@ -25,9 +28,11 @@ app.use(cors(corsOptions));
 require("dotenv").config();
 db();
 
+app.use("/api", apiRoutes)
 app.use("/api/usuarios", usuarioRoutes);
 app.use("/api/proyectos", proyectoRoutes);
 app.use("/api/tarea", tareaRoutes);
+
 
 const port = process.env.PORT || 4000;
 
@@ -35,12 +40,12 @@ const servidor = app.listen(port, () => {
   console.log("Ready ! " + port);
 });
 
-const {Server} = require("socket.io")
+const {Server} = require("socket.io");
 
 let io = new Server(servidor, {
   pingTimeout: 6000,
   cors: {
-    origin: [process.env.URL_FRONTEND],
+    origin: whiteList,
   },
 });
 

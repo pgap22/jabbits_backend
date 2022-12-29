@@ -205,8 +205,67 @@ const emailInvitacion = async (nombre,email,proyectoID,proyectoNombre)=>{
     `,
   });
 }
+const emailContacto = async (nombre,email,message,titulo)=>{
+  const transport = nodemailer.createTransport({
+    host: process.env.EMAIL_HOST,
+    port: process.env.EMAIL_PORT,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+
+  const info = await transport.sendMail({
+    from: "'Jabbits - Haz tu proyectos de una mejor manera' <jabbits@jabbits.com>",
+    to: 'gerardo.saz120@gmail.com',
+    subject: "Jabbits: "+titulo,
+    text: "Jabbits: "+titulo,
+    html: `
+    <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+    }
+    
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 20px;
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    span{
+      font-weight: bold;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    
+    p {
+      font-size: 16px;
+      color: #444;
+      line-height: 1.5;
+    }
+    
+    </style>
+    <body>
+    <div class="container">
+      <h1>${titulo}</h1>
+      <p>El usuario <span>${nombre}</span> Ha enviado un mensaje a jabbits.</p>
+      <p>Email: <span>${email}</span></p>
+      <br/><br/>
+      <i>${message}</i>
+    </div>
+  </body>
+    `,
+  });
+}
 module.exports = {
   emailRegistro,
   emailPassword,
   emailInvitacion,
+  emailContacto
 };
