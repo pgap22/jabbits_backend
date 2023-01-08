@@ -3,7 +3,7 @@ mongoose.set("strictQuery", false);
 // const { loadingEffect, clearLastLine } = require("../helpers/dbMessage");
 
 
-const loadingId = loadingEffect();
+// const loadingId = loadingEffect();
 
 const db = async () => {
   try {
