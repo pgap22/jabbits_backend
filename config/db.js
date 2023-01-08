@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
-const { loadingEffect, clearLastLine } = require("../helpers/dbMessage");
+// const { loadingEffect, clearLastLine } = require("../helpers/dbMessage");
 
 
 const loadingId = loadingEffect();
@@ -12,10 +12,10 @@ const db = async () => {
       useUnifiedTopology: true,
     });
   
-    clearInterval(loadingId);
-    clearLastLine();
+    // clearInterval(loadingId);
+    // clearLastLine();
     console.log(`Conectado a ${connection.connection.host}`);  
-    console.log(``);  
+    // console.log(``);  
   } catch (error) {
     console.log(error.message);
     process.exit(1)
