@@ -17,7 +17,6 @@ const corsOptions = {
     if(whiteList.includes(origin)){
       callback(null,true)
     }else{
-      console.log(origin);
       callback('Pay me $40 or use Jabbits',false)
     }
   }
