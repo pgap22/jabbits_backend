@@ -5,6 +5,7 @@ const usuarioRoutes = require("./routes/usuarioRoutes");
 const proyectoRoutes = require("./routes/proyectosRoutes");
 const tareaRoutes = require("./routes/tareaRoutes");
 const apiRoutes = require("./routes/apiRoutes");
+const tareaIndividualRoutes = require("./routes/tareaIndividualRoutes");
 const app = express();
 
 app.use(express.urlencoded({extended: false}))
@@ -22,7 +23,7 @@ const corsOptions = {
   }
 }
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 require("dotenv").config();
 db();
@@ -31,7 +32,9 @@ app.use("/api", apiRoutes)
 app.use("/api/usuarios", usuarioRoutes);
 app.use("/api/proyectos", proyectoRoutes);
 app.use("/api/tarea", tareaRoutes);
+app.use("/api/tarea-individual",tareaIndividualRoutes);
 
+// miPagina.com/api/tarea-individual/
 
 const port = process.env.PORT || 4000;
 
